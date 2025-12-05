@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ValueCardComponent } from "@/components/value-card"
 import { AddCustomValueDialog } from "@/components/add-custom-value-dialog"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { updateValuePriority, addCustomValue } from "@/lib/actions"
 import type { ValueCard, Priority } from "@/lib/types"
 import { ArrowRight, Plus, Info, X } from "lucide-react"
@@ -174,12 +173,9 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-lg font-semibold">Step 1: Sort your values</h1>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {cards.length - unsortedCards.length} / {cards.length} sorted
-              </span>
-              <ThemeToggle />
-            </div>
+            <span className="text-sm text-muted-foreground">
+              {cards.length - unsortedCards.length} / {cards.length} sorted
+            </span>
           </div>
           <div className="w-full bg-muted rounded-full h-2">
             <div
