@@ -77,9 +77,9 @@ export function ValueCardComponent({
         )}
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <span
-              className={`font-semibold ${prominent ? "text-xl" : compact ? "text-sm" : "text-base"} ${prominent ? "" : "truncate"}`}
+              className={`font-semibold text-center ${prominent ? "text-xl" : compact ? "text-sm" : "text-base"} ${prominent ? "" : "truncate"}`}
             >
               {card.label}
             </span>
@@ -89,7 +89,7 @@ export function ValueCardComponent({
           </div>
 
           {prominent && card.description && (
-            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{card.description}</p>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed text-center">{card.description}</p>
           )}
         </div>
 

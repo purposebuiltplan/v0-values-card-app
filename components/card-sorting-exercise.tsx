@@ -310,15 +310,12 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, zone.priority)}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <h2 className="text-sm font-medium text-foreground">{zone.label}</h2>
-                      <p className="text-xs text-muted-foreground">{zone.description}</p>
-                    </div>
-                    <span className="text-sm text-muted-foreground">
-                      {zoneCards.length}
+                  <div className="text-center mb-2">
+                    <h2 className="text-lg font-semibold text-foreground">{zone.label}</h2>
+                    <p className="text-xs text-muted-foreground">
+                      {zone.description} • {zoneCards.length}
                       {zone.priority === "high" && ` / ${MAX_HIGH_CARDS}`}
-                    </span>
+                    </p>
                   </div>
                   <div
                     className={`
@@ -329,11 +326,11 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
                     {zoneCards.length === 0 ? (
                       <p className="text-sm text-muted-foreground text-center py-6">Drop cards here</p>
                     ) : (
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 justify-center">
                         {zoneCards.map((card) => (
                           <div
                             key={card.sessionValueId}
-                            className="bg-card border rounded-lg px-3 py-2 text-sm font-medium shadow-sm cursor-grab"
+                            className="bg-card border rounded-lg px-3 py-2 text-sm font-medium shadow-sm cursor-grab text-center"
                             draggable
                             onDragStart={(e) => {
                               e.dataTransfer.setData("application/json", JSON.stringify(card))
