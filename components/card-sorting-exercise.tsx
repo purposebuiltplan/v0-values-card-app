@@ -2,11 +2,12 @@
 
 import type React from "react"
 
-import { useState, useCallback, useMemo } from "react"
+import { useState, useCallback, useMemo, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ValueCardComponent } from "@/components/value-card"
 import { AddCustomValueDialog } from "@/components/add-custom-value-dialog"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { updateValuePriority, addCustomValue } from "@/lib/actions"
 import type { ValueCard, Priority } from "@/lib/types"
 import { ArrowRight, Plus, Info, X } from "lucide-react"
@@ -24,18 +25,48 @@ const ZONES: { priority: Priority; label: string; description: string }[] = [
 
 const MAX_HIGH_CARDS = 15
 
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export function CardSortingExercise({ sessionId, initialCards }: CardSortingExerciseProps) {
   const router = useRouter()
   const [cards, setCards] = useState<ValueCard[]>(initialCards)
+  const [hasShuffled, setHasShuffled] = useState(false)
   const [isAddingCustom, setIsAddingCustom] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
   const [dragOverZone, setDragOverZone] = useState<Priority | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  useEffect(() => {
+    if (!hasShuffled) {
+      setCards((prev) => {
+        const unsorted = prev.filter((c) => c.priority === "unsorted")
+        const sorted = prev.filter((c) => c.priority !== "unsorted")
+        return [...shuffleArray(unsorted), ...sorted]
+      })
+      setHasShuffled(true)
+    }
+  }, [hasShuffled])
+
   const unsortedCards = useMemo(() => cards.filter((c) => c.priority === "unsorted"), [cards])
-  const highCards = useMemo(() => cards.filter((c) => c.priority === "high"), [cards])
-  const mediumCards = useMemo(() => cards.filter((c) => c.priority === "medium"), [cards])
-  const lowCards = useMemo(() => cards.filter((c) => c.priority === "low"), [cards])
+  const highCards = useMemo(
+    () => cards.filter((c) => c.priority === "high").sort((a, b) => a.label.localeCompare(b.label)),
+    [cards],
+  )
+  const mediumCards = useMemo(
+    () => cards.filter((c) => c.priority === "medium").sort((a, b) => a.label.localeCompare(b.label)),
+    [cards],
+  )
+  const lowCards = useMemo(
+    () => cards.filter((c) => c.priority === "low").sort((a, b) => a.label.localeCompare(b.label)),
+    [cards],
+  )
 
   const currentCard = unsortedCards[0] || null
   const remainingCount = unsortedCards.length - 1
@@ -143,9 +174,12 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-lg font-semibold">Step 1: Sort your values</h1>
-            <span className="text-sm text-muted-foreground">
-              {cards.length - unsortedCards.length} / {cards.length} sorted
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">
+                {cards.length - unsortedCards.length} / {cards.length} sorted
+              </span>
+              <ThemeToggle />
+            </div>
           </div>
           <div className="w-full bg-muted rounded-full h-2">
             <div

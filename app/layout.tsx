@@ -13,29 +13,33 @@ export const metadata: Metadata = {
   description:
     "Clarify your core values in just a few minutes. Sort value cards, pick your Core 4-7, and get a fun summary emailed to you.",
   generator: "v0.app",
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
 }
 
 export const viewport: Viewport = {
-  themeColor: "#3d8c40",
+  themeColor: "#2d6a4f",
   width: "device-width",
   initialScale: 1,
+}
+
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              const stored = localStorage.getItem('theme');
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              if (stored === 'dark' || (!stored && prefersDark)) {
+                document.documentElement.classList.add('dark');
+              }
+            })();
+          `,
+        }}
+      />
+      {children}
+    </>
+  )
 }
 
 export default function RootLayout({
@@ -44,9 +48,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>
     </html>

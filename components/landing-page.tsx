@@ -26,7 +26,7 @@ export function LandingPage() {
       {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-4 py-16 text-center">
         <div className="max-w-2xl mx-auto space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-(--color-high-bg) text-primary text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
             <Sparkles className="w-4 h-4" />
             <span>Free values exercise</span>
           </div>
@@ -36,7 +36,7 @@ export function LandingPage() {
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-xl mx-auto">
-            Sort a stack of value cards, pick your Core 4-7, and get a fun summary emailed to you.
+            Sort a stack of value cards, pick your Core 4-7, and get a personalized summary to keep.
           </p>
 
           <Button size="lg" onClick={handleStart} disabled={isLoading} className="text-lg px-8 py-6 h-auto gap-2">
@@ -61,18 +61,18 @@ export function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-(--color-high-bg) flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Target className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-lg font-semibold">Sort your values</h3>
               <p className="text-muted-foreground">
-                Move 60 value cards into three priority levels: Very Important, Matters to Me, or Not Really Me.
+                Move 60 value cards into three priority levels: Very Important, Matters to Me, or Low Priority.
               </p>
             </div>
 
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-(--color-medium-bg) flex items-center justify-center">
-                <Heart className="w-8 h-8 text-(--color-medium)" />
+              <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center">
+                <Heart className="w-8 h-8 text-accent-foreground" />
               </div>
               <h3 className="text-lg font-semibold">Pick your Core 4-7</h3>
               <p className="text-muted-foreground">

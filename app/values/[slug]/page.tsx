@@ -55,7 +55,9 @@ export default async function ValuesSummaryPage({ params, searchParams }: PagePr
       coreValues={coreValues}
       otherHighValues={otherHighValues}
       shareSlug={slug}
+      sessionId={session.id}
       isNew={isNew === "true"}
+      initialReflections={session.reflection_responses}
     />
   )
 }

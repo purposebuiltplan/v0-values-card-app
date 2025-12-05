@@ -14,6 +14,7 @@ export interface Session {
   user_email: string | null
   current_step: number
   completed_at: string | null
+  reflection_responses: Record<string, string> | null
 }
 
 export interface SessionValue {

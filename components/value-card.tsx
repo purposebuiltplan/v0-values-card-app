@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import type { ValueCard, Priority } from "@/lib/types"
-import { Info, ChevronUp, ChevronRight, ChevronDown, GripVertical } from "lucide-react"
+import { Info, Star, Check, X, GripVertical } from "lucide-react"
 
 interface ValueCardComponentProps {
   card: ValueCard
@@ -93,7 +93,6 @@ export function ValueCardComponent({
           )}
         </div>
 
-        {/* Info Icon with Tooltip - only for non-prominent cards */}
         {!prominent && card.description && (
           <Popover open={showTooltip} onOpenChange={setShowTooltip}>
             <PopoverTrigger asChild>
@@ -115,43 +114,45 @@ export function ValueCardComponent({
       </div>
 
       {mobileActions && onMove && (
-        <div className="flex gap-2 mt-4 pt-3 border-t justify-center">
+        <div className="flex flex-col gap-2 mt-4 pt-4 border-t">
           <Button
             variant={card.priority === "high" ? "default" : "outline"}
             size="sm"
-            className="h-10 w-10 p-0"
+            className="w-full h-11 text-sm font-medium"
             onClick={(e) => {
               e.stopPropagation()
               handleQuickMove("high")
             }}
-            title="Very Important"
           >
-            <ChevronUp className="w-5 h-5" />
+            <Star className="w-4 h-4 mr-2" />
+            Very Important
           </Button>
-          <Button
-            variant={card.priority === "medium" ? "secondary" : "outline"}
-            size="sm"
-            className="h-10 w-10 p-0"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleQuickMove("medium")
-            }}
-            title="Matters to Me"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-          <Button
-            variant={card.priority === "low" ? "secondary" : "outline"}
-            size="sm"
-            className="h-10 w-10 p-0"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleQuickMove("low")
-            }}
-            title="Low Priority"
-          >
-            <ChevronDown className="w-5 h-5" />
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant={card.priority === "medium" ? "secondary" : "outline"}
+              size="sm"
+              className="flex-1 h-10 text-sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleQuickMove("medium")
+              }}
+            >
+              <Check className="w-4 h-4 mr-1.5" />
+              Matters
+            </Button>
+            <Button
+              variant={card.priority === "low" ? "secondary" : "outline"}
+              size="sm"
+              className="flex-1 h-10 text-sm"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleQuickMove("low")
+              }}
+            >
+              <X className="w-4 h-4 mr-1.5" />
+              Not Me
+            </Button>
+          </div>
         </div>
       )}
 
@@ -166,7 +167,7 @@ export function ValueCardComponent({
               handleQuickMove("high")
             }}
           >
-            <ChevronUp className="w-3 h-3 mr-1" />
+            <Star className="w-3 h-3 mr-1" />
             Important
           </Button>
           <Button
@@ -178,7 +179,7 @@ export function ValueCardComponent({
               handleQuickMove("medium")
             }}
           >
-            <ChevronRight className="w-3 h-3 mr-1" />
+            <Check className="w-3 h-3 mr-1" />
             Matters
           </Button>
           <Button
@@ -190,7 +191,7 @@ export function ValueCardComponent({
               handleQuickMove("low")
             }}
           >
-            <ChevronDown className="w-3 h-3 mr-1" />
+            <X className="w-3 h-3 mr-1" />
             Not Me
           </Button>
         </div>

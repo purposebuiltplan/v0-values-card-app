@@ -1,80 +1,143 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
 import type { ValueCard } from "@/lib/types"
-import { Star, Copy, Check, Share2, Sparkles } from "lucide-react"
+import { saveReflectionResponses } from "@/lib/actions"
+import { Star, Download, Mail, Sparkles, Save, Check, ArrowLeft } from "lucide-react"
 
 interface ValuesSummaryProps {
   userName: string | null
   coreValues: ValueCard[]
   otherHighValues: ValueCard[]
   shareSlug: string
+  sessionId: string
   isNew?: boolean
+  initialReflections?: Record<string, string> | null
 }
 
-export function ValuesSummary({ userName, coreValues, otherHighValues, shareSlug, isNew = false }: ValuesSummaryProps) {
-  const [copiedSummary, setCopiedSummary] = useState(false)
-  const [copiedExercise, setCopiedExercise] = useState(false)
+const REFLECTION_PROMPTS = [
+  { id: "daily", prompt: "Where do you already see these values show up in your day-to-day life?" },
+  { id: "tension", prompt: "Where do you feel tension or misalignment?" },
+  { id: "decision", prompt: "What's one decision you could make this month to better live out these values?" },
+]
 
-  const handleCopySummaryLink = async () => {
-    const url = `${window.location.origin}/values/${shareSlug}`
-    await navigator.clipboard.writeText(url)
-    setCopiedSummary(true)
-    setTimeout(() => setCopiedSummary(false), 2000)
+export function ValuesSummary({
+  userName,
+  coreValues,
+  otherHighValues,
+  shareSlug,
+  sessionId,
+  isNew = false,
+  initialReflections = null,
+}: ValuesSummaryProps) {
+  const router = useRouter()
+  const [reflections, setReflections] = useState<Record<string, string>>(initialReflections || {})
+  const [isSaving, setIsSaving] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current)
+    }
+
+    saveTimeoutRef.current = setTimeout(async () => {
+      if (Object.keys(reflections).length > 0) {
+        setIsSaving(true)
+        try {
+          await saveReflectionResponses(shareSlug, reflections)
+          setSaved(true)
+          setTimeout(() => setSaved(false), 2000)
+        } catch (err) {
+          console.error("Failed to save reflections:", err)
+        }
+        setIsSaving(false)
+      }
+    }, 1000)
+
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current)
+      }
+    }
+  }, [reflections, shareSlug])
+
+  const handleReflectionChange = (id: string, value: string) => {
+    setReflections((prev) => ({ ...prev, [id]: value }))
   }
 
-  const handleCopyExerciseLink = async () => {
-    const url = window.location.origin
-    await navigator.clipboard.writeText(url)
-    setCopiedExercise(true)
-    setTimeout(() => setCopiedExercise(false), 2000)
+  const handleDownloadPDF = () => {
+    window.print()
+  }
+
+  const handleShareExercise = () => {
+    const subject = encodeURIComponent("Try this values exercise!")
+    const body = encodeURIComponent(
+      `Hey!\n\nI just completed a values card exercise that helped me clarify what matters most to me. I thought you might enjoy it too!\n\nTry it here: ${window.location.origin}\n\nIt only takes about 10-15 minutes and gives you a nice summary of your core values at the end.`,
+    )
+    window.location.href = `mailto:?subject=${subject}&body=${body}`
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background print:min-h-0 print:bg-transparent">
       {/* Success Banner for new completions */}
       {isNew && (
-        <div className="bg-primary text-primary-foreground py-3 px-4 text-center">
+        <div className="bg-primary text-primary-foreground py-3 px-4 text-center print:hidden">
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="w-5 h-5" />
-            <span className="font-medium">Nice work! Your values summary has been saved and emailed to you.</span>
+            <span className="font-medium">Nice work! Your values summary is ready.</span>
           </div>
         </div>
       )}
 
-      <main className="max-w-3xl mx-auto px-4 py-8 md:py-12">
-        {/* Header */}
-        <header className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-balance">
+      <main className="max-w-3xl mx-auto px-4 py-8 md:py-12 print:py-0 print:px-0 print:max-w-none">
+        <div className="mb-6 print:hidden">
+          <Button
+            variant="ghost"
+            onClick={() => router.push(`/exercise/${sessionId}/core`)}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to edit selections
+          </Button>
+        </div>
+
+        {/* Header - compact for print */}
+        <header className="text-center mb-10 print:mb-4 print:text-left">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-balance print:text-xl print:mb-1">
             {userName ? `${userName}'s Core Values` : "Your Core Values"}
           </h1>
-          <p className="text-muted-foreground">The values that matter most to you, all in one place.</p>
+          <p className="text-muted-foreground print:text-xs">The values that matter most to you, all in one place.</p>
         </header>
 
-        {/* Core Values Section */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Star className="w-5 h-5 text-primary fill-primary" />
+        <section className="mb-10 print:mb-3">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 print:text-base print:mb-2">
+            <Star className="w-5 h-5 text-primary fill-primary print:w-4 print:h-4" />
             Core Values ({coreValues.length})
           </h2>
-          <div className="grid gap-4">
+          <div className="grid gap-4 print:grid-cols-2 print:gap-2">
             {coreValues.map((value) => (
-              <Card key={value.sessionValueId} className="border-primary/20 bg-primary/5">
-                <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Star className="w-5 h-5 text-primary fill-primary shrink-0" />
+              <Card
+                key={value.sessionValueId}
+                className="border-primary/20 bg-primary/5 print:shadow-none print:border print:p-2"
+              >
+                <CardHeader className="pb-2 print:p-0 print:pb-1">
+                  <CardTitle className="flex items-center gap-2 text-lg print:text-sm print:font-semibold">
+                    <Star className="w-5 h-5 text-primary fill-primary shrink-0 print:w-3 print:h-3" />
                     {value.label}
                     {value.isCustom && (
-                      <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded font-normal">
+                      <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded font-normal print:text-[9px] print:px-1">
                         Custom
                       </span>
                     )}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
+                <CardContent className="print:p-0">
+                  <p className="text-muted-foreground print:text-xs print:leading-tight">
                     {value.customDescription || value.description || "No description provided."}
                   </p>
                 </CardContent>
@@ -83,15 +146,16 @@ export function ValuesSummary({ userName, coreValues, otherHighValues, shareSlug
           </div>
         </section>
 
-        {/* Other Very Important Values */}
         {otherHighValues.length > 0 && (
-          <section className="mb-10">
-            <h2 className="text-xl font-semibold mb-4">Other Very Important Values ({otherHighValues.length})</h2>
-            <div className="flex flex-wrap gap-2">
+          <section className="mb-10 print:mb-3">
+            <h2 className="text-xl font-semibold mb-4 print:text-base print:mb-2">
+              Other Very Important Values ({otherHighValues.length})
+            </h2>
+            <div className="flex flex-wrap gap-2 print:gap-1">
               {otherHighValues.map((value) => (
                 <span
                   key={value.sessionValueId}
-                  className="px-3 py-1.5 bg-secondary text-secondary-foreground rounded-full text-sm"
+                  className="px-3 py-1.5 bg-secondary text-secondary-foreground rounded-full text-sm print:text-xs print:px-2 print:py-0.5"
                 >
                   {value.label}
                 </span>
@@ -100,66 +164,68 @@ export function ValuesSummary({ userName, coreValues, otherHighValues, shareSlug
           </section>
         )}
 
-        {/* Reflection Prompts */}
-        <section className="mb-10">
-          <Card className="bg-muted/50">
-            <CardHeader>
-              <CardTitle className="text-lg">Reflection prompts</CardTitle>
+        <section className="mb-10 print:mb-0">
+          <Card className="bg-muted/50 print:bg-transparent print:shadow-none print:border-none">
+            <CardHeader className="print:p-0 print:pb-2">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg print:text-base">Reflection prompts</CardTitle>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground print:hidden">
+                  {isSaving && (
+                    <>
+                      <Save className="w-4 h-4 animate-pulse" />
+                      <span>Saving...</span>
+                    </>
+                  )}
+                  {saved && !isSaving && (
+                    <>
+                      <Check className="w-4 h-4 text-primary" />
+                      <span>Saved</span>
+                    </>
+                  )}
+                </div>
+              </div>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex gap-3">
-                  <span className="text-primary">•</span>
-                  Where do you already see these values show up in your day-to-day life?
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">•</span>
-                  Where do you feel tension or misalignment?
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">•</span>
-                  What's one decision you could make this month to better live out these values?
-                </li>
-              </ul>
+            <CardContent className="space-y-6 print:space-y-2 print:p-0">
+              {REFLECTION_PROMPTS.map((item) => (
+                <div key={item.id} className="space-y-2 print:space-y-1">
+                  <label className="flex gap-3 text-muted-foreground print:text-xs print:gap-1">
+                    <span className="text-primary">•</span>
+                    {item.prompt}
+                  </label>
+                  {/* Screen: show textarea */}
+                  <Textarea
+                    placeholder="Type your thoughts here..."
+                    value={reflections[item.id] || ""}
+                    onChange={(e) => handleReflectionChange(item.id, e.target.value)}
+                    className="min-h-[100px] bg-background print:hidden"
+                  />
+                  {/* Print: show text directly */}
+                  <p className="hidden print:block text-xs whitespace-pre-wrap border-b border-dashed border-muted-foreground/30 pb-1 min-h-[2em]">
+                    {reflections[item.id] || ""}
+                  </p>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </section>
 
-        {/* Share Section */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold">Share</h2>
+        {/* Actions - hidden in print */}
+        <section className="space-y-3 print:hidden">
+          <h2 className="text-lg font-semibold">Actions</h2>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button variant="outline" className="flex-1 bg-transparent" onClick={handleCopySummaryLink}>
-              {copiedSummary ? (
-                <>
-                  <Check className="w-4 h-4 mr-2" />
-                  Link copied!
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy link to this summary
-                </>
-              )}
+            <Button variant="default" className="flex-1" onClick={handleDownloadPDF}>
+              <Download className="w-4 h-4 mr-2" />
+              Download PDF
             </Button>
-            <Button variant="outline" className="flex-1 bg-transparent" onClick={handleCopyExerciseLink}>
-              {copiedExercise ? (
-                <>
-                  <Check className="w-4 h-4 mr-2" />
-                  Link copied!
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Invite someone else to take the exercise
-                </>
-              )}
+            <Button variant="outline" className="flex-1 bg-transparent" onClick={handleShareExercise}>
+              <Mail className="w-4 h-4 mr-2" />
+              Share this exercise
             </Button>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+        {/* Footer - minimal for print */}
+        <footer className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground print:mt-4 print:pt-2 print:text-xs">
           <p>Purpose Built Values Cards</p>
         </footer>
       </main>

@@ -134,28 +134,57 @@ export async function addCustomValue(sessionId: string, label: string, descripti
   return data as SessionValue
 }
 
-export async function finalizeSession(sessionId: string, userName: string | null, userEmail: string): Promise<Session> {
+export async function finalizeSession(
+  sessionId: string,
+  userName: string | null,
+  userEmail?: string,
+): Promise<Session> {
   const supabase = await createClient()
+
+  const { data: existingSession, error: fetchError } = await supabase
+    .from("sessions")
+    .select("*")
+    .eq("id", sessionId)
+    .single()
+
+  if (fetchError) {
+    console.error("[v0] Error fetching session:", fetchError)
+    throw new Error("Failed to fetch session")
+  }
+
+  // If already finalized, just return the existing session
+  if (existingSession?.slug) {
+    console.log("[v0] Session already finalized with slug:", existingSession.slug)
+    return existingSession as Session
+  }
 
   const shareSlug = nanoid(10)
 
-  const { data, error } = await supabase
-    .from("sessions")
-    .update({
-      user_name: userName,
-      user_email: userEmail,
-      slug: shareSlug,
-      completed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    })
-    .eq("id", sessionId)
-    .select()
-    .single()
+  const updateData: Record<string, unknown> = {
+    user_name: userName,
+    slug: shareSlug,
+    completed_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }
 
-  if (error || !data) {
+  // Only include email if provided
+  if (userEmail) {
+    updateData.user_email = userEmail
+  }
+
+  const { data, error } = await supabase.from("sessions").update(updateData).eq("id", sessionId).select().single()
+
+  if (error) {
+    console.error("[v0] Error updating session:", error)
     throw new Error("Failed to finalize session")
   }
 
+  if (!data) {
+    console.error("[v0] No data returned from update")
+    throw new Error("Failed to finalize session - no data returned")
+  }
+
+  console.log("[v0] Session finalized successfully:", data)
   return data as Session
 }
 
@@ -193,4 +222,32 @@ export async function getSessionValuesBySlug(slug: string): Promise<SessionValue
   }
 
   return data as SessionValue[]
+}
+
+export async function saveReflectionResponses(slug: string, responses: Record<string, string>): Promise<void> {
+  const supabase = await createClient()
+
+  const { error } = await supabase
+    .from("sessions")
+    .update({
+      reflection_responses: responses,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("slug", slug)
+
+  if (error) {
+    throw new Error("Failed to save reflection responses")
+  }
+}
+
+export async function getReflectionResponses(slug: string): Promise<Record<string, string> | null> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.from("sessions").select("reflection_responses").eq("slug", slug).single()
+
+  if (error || !data) {
+    return null
+  }
+
+  return data.reflection_responses as Record<string, string> | null
 }

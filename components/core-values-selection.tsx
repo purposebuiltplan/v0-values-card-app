@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { updateCoreValue } from "@/lib/actions"
+import { updateCoreValue, finalizeSession } from "@/lib/actions"
 import type { ValueCard } from "@/lib/types"
 import { ArrowRight, ArrowLeft, Star, Info, X } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -89,7 +89,25 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
       }
     }
 
-    router.push(`/exercise/${sessionId}/finalize`)
+    try {
+      console.log("[v0] Calling finalizeSession with sessionId:", sessionId)
+      const session = await finalizeSession(sessionId, null)
+      console.log("[v0] Session returned:", session)
+      console.log("[v0] Session slug:", session?.slug)
+
+      if (!session?.slug) {
+        console.error("[v0] No slug returned from finalizeSession")
+        showError("Failed to generate summary link. Please try again.")
+        setIsNavigating(false)
+        return
+      }
+
+      router.push(`/values/${session.slug}`)
+    } catch (error) {
+      console.error("[v0] Failed to finalize session:", error)
+      showError("Something went wrong. Please try again.")
+      setIsNavigating(false)
+    }
   }
 
   const handleBack = () => {
@@ -259,7 +277,7 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
                 "Saving..."
               ) : (
                 <>
-                  Continue: Send me my values summary
+                  View My Values Summary
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}
