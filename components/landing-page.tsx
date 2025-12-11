@@ -93,6 +93,24 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* Newsletter Signup Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-primary/10 border-2 border-primary/20 rounded-2xl p-8 md:p-12 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Financial clarity for faith-driven founders.</h2>
+            <p className="text-lg text-muted-foreground mb-6">
+              Enjoyed this exercise? Each week I share simple, purposeful tools to help founders slow down, get clear,
+              and make intentional decisions for their life, family, and finances.
+            </p>
+            <Button size="lg" asChild className="text-lg px-8 py-6 h-auto">
+              <a href="https://purposebuilt.kit.com/weekly" target="_blank" rel="noopener noreferrer">
+                Subscribe to the newsletter
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-8 px-4 text-center text-sm text-muted-foreground border-t">
         <p>Purpose Built Values Cards</p>

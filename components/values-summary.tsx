@@ -224,6 +224,24 @@ export function ValuesSummary({
           </div>
         </section>
 
+        {/* Newsletter signup section */}
+        <section className="mt-10 print:hidden">
+          <Card className="bg-primary/10 border-2 border-primary/20">
+            <CardContent className="pt-6 text-center">
+              <h3 className="text-xl font-semibold mb-2">Financial clarity for faith-driven founders.</h3>
+              <p className="text-muted-foreground mb-4">
+                Enjoyed this exercise? Each week I share simple, purposeful tools to help founders slow down, get clear,
+                and make intentional decisions for their life, family, and finances.
+              </p>
+              <Button asChild size="lg">
+                <a href="https://purposebuilt.kit.com/weekly" target="_blank" rel="noopener noreferrer">
+                  Subscribe to the newsletter
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+
         {/* Footer - minimal for print */}
         <footer className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground print:mt-4 print:pt-2 print:text-xs">
           <p>Purpose Built Values Cards</p>
