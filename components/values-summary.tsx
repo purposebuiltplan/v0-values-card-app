@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import type { ValueCard } from "@/lib/types"
 import { saveReflectionResponses } from "@/lib/actions"
-import { Star, Download, Mail, Sparkles, Save, Check, ArrowLeft } from "lucide-react"
+import { Star, Download, Share2, Sparkles, Save, Check, ArrowLeft } from "lucide-react"
 
 interface ValuesSummaryProps {
   userName: string | null
@@ -218,7 +218,7 @@ export function ValuesSummary({
               Download PDF
             </Button>
             <Button variant="outline" className="flex-1 bg-transparent" onClick={handleShareExercise}>
-              <Mail className="w-4 h-4 mr-2" />
+              <Share2 className="w-4 h-4 mr-2" />
               Share this exercise
             </Button>
           </div>

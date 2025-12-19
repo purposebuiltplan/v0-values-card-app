@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { createSession } from "@/lib/actions"
-import { Sparkles, ArrowRight, Heart, Target, Mail } from "lucide-react"
+import { Sparkles, ArrowRight, Heart, Target, FileText } from "lucide-react"
 
 export function LandingPage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -32,11 +32,12 @@ export function LandingPage() {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance">
-            Clarify your core values in just a few minutes
+            Values Card Exercise: Clarify your core values in just a few minutes
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-xl mx-auto">
-            Sort a stack of value cards, pick your Core 4-7, and get a personalized summary to keep.
+            Sort and reflect on a set of values to identify the few that matter most to you, and capture them in a
+            clear, personalized summary.
           </p>
 
           <Button size="lg" onClick={handleStart} disabled={isLoading} className="text-lg px-8 py-6 h-auto gap-2">
@@ -50,7 +51,7 @@ export function LandingPage() {
             )}
           </Button>
 
-          <p className="text-sm text-muted-foreground">Takes about 10-15 minutes. No account required.</p>
+          <p className="text-sm text-muted-foreground">Takes about 10 minutes. No account required.</p>
         </div>
       </section>
 
@@ -66,7 +67,7 @@ export function LandingPage() {
               </div>
               <h3 className="text-lg font-semibold">Sort your values</h3>
               <p className="text-muted-foreground">
-                Move 60 value cards into three priority levels: Very Important, Matters to Me, or Low Priority.
+                Move through a set of value cards and sort them based on how important they feel to you.
               </p>
             </div>
 
@@ -74,7 +75,7 @@ export function LandingPage() {
               <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center">
                 <Heart className="w-8 h-8 text-accent-foreground" />
               </div>
-              <h3 className="text-lg font-semibold">Pick your Core 4-7</h3>
+              <h3 className="text-lg font-semibold">Choose your Core Values</h3>
               <p className="text-muted-foreground">
                 From your top values, choose the 4-7 that feel absolutely essential to who you are.
               </p>
@@ -82,11 +83,11 @@ export function LandingPage() {
 
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Mail className="w-8 h-8 text-primary" />
+                <FileText className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold">Get your summary</h3>
+              <h3 className="text-lg font-semibold">Review your summary</h3>
               <p className="text-muted-foreground">
-                Receive a personalized values report you can revisit, reflect on, and share with others.
+                See your core values captured in a simple summary you can download, reflect on, and revisit.
               </p>
             </div>
           </div>
