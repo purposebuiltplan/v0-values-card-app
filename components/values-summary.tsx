@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import type { ValueCard } from "@/lib/types"
 import { saveReflectionResponses } from "@/lib/actions"
-import { Star, Download, Share2, Sparkles, Save, Check, ArrowLeft } from "lucide-react"
+import { Star, Download, Share2, Sparkles, Save, Check, ArrowLeft, Home, Mail, Lightbulb } from "lucide-react"
 
 interface ValuesSummaryProps {
   userName: string | null
@@ -82,6 +82,11 @@ export function ValuesSummary({
     window.location.href = `mailto:?subject=${subject}&body=${body}`
   }
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.origin)
+    alert("Link copied to clipboard!")
+  }
+
   return (
     <div className="min-h-screen bg-background print:min-h-0 print:bg-transparent">
       {/* Success Banner for new completions */}
@@ -94,8 +99,8 @@ export function ValuesSummary({
         </div>
       )}
 
-      <main className="max-w-3xl mx-auto px-4 py-8 md:py-12 print:py-0 print:px-0 print:max-w-none">
-        <div className="mb-6 print:hidden">
+      <main className="max-w-5xl mx-auto px-4 py-8 md:py-12 print:py-0 print:px-0 print:max-w-none">
+        <div className="mb-6 flex items-center justify-between print:hidden">
           <Button
             variant="ghost"
             onClick={() => router.push(`/exercise/${sessionId}/core`)}
@@ -103,6 +108,14 @@ export function ValuesSummary({
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to edit selections
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => router.push("/")}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Start Over
           </Button>
         </div>
 
@@ -211,35 +224,80 @@ export function ValuesSummary({
 
         {/* Actions - hidden in print */}
         <section className="space-y-3 print:hidden">
-          <h2 className="text-lg font-semibold">Actions</h2>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button variant="default" className="flex-1" onClick={handleDownloadPDF}>
+          <div className="flex justify-center">
+            <Button variant="default" onClick={handleDownloadPDF} className="max-w-sm">
               <Download className="w-4 h-4 mr-2" />
-              Download PDF
-            </Button>
-            <Button variant="outline" className="flex-1 bg-transparent" onClick={handleShareExercise}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Share this exercise
+              Download PDF Report
             </Button>
           </div>
         </section>
 
-        {/* Newsletter signup section */}
-        <section className="mt-10 print:hidden">
-          <Card className="bg-primary/10 border-2 border-primary/20">
-            <CardContent className="pt-6 text-center">
-              <h3 className="text-xl font-semibold mb-2">Financial clarity for faith-driven founders.</h3>
-              <p className="text-muted-foreground mb-4">
-                Enjoyed this exercise? Each week I share simple, purposeful tools to help founders slow down, get clear,
-                and make intentional decisions for their life, family, and finances.
-              </p>
-              <Button asChild size="lg">
-                <a href="https://purposebuilt.kit.com/weekly" target="_blank" rel="noopener noreferrer">
-                  Subscribe to the newsletter
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
+        {/* What's Next section with three CTAs */}
+        <section className="mt-20 print:hidden">
+          <h2 className="text-2xl font-bold text-center mb-8">What's Next</h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Share Exercise */}
+            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Share2 className="w-6 h-6 text-primary" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Share Exercise</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Send this assessment to friends or family</p>
+                </div>
+                <Button variant="outline" className="w-full bg-background" onClick={handleCopyLink}>
+                  Copy Share Link
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Newsletter */}
+            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primary" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Financial clarity for faith-driven founders.</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Enjoyed this exercise? Each week I share simple, purposeful tools to help founders slow down, get
+                    clear, and make intentional decisions for their life, family, and finances.
+                  </p>
+                </div>
+                <Button className="w-full" asChild>
+                  <a href="https://purposebuilt.kit.com/weekly" target="_blank" rel="noopener noreferrer">
+                    Subscribe
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Balance Wheel Exercise */}
+            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6 text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Lightbulb className="w-6 h-6 text-primary" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">Balance Wheel Exercise</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Assess life balance across key areas in minutes</p>
+                </div>
+                <Button variant="outline" className="w-full bg-background" asChild>
+                  <a href="https://v0-balance-wheel-app.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    Try It Now
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         {/* Footer - minimal for print */}

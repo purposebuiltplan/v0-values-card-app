@@ -63,34 +63,34 @@
   --low-bg: oklch(0.92 0.01 175);
 }
 
-/* Updated dark mode with warm neutrals and muted sage green */
+/* Updated dark mode to use proper dark charcoal grey instead of greenish-brown */
 .dark {
-  /* Warm dark backgrounds */
-  --background: oklch(0.18 0.015 75);
+  /* Cool dark charcoal grey backgrounds - neutral hue */
+  --background: oklch(0.18 0.005 240);
   --foreground: oklch(0.92 0.01 75);
 
-  --card: oklch(0.22 0.015 75);
+  --card: oklch(0.22 0.005 240);
   --card-foreground: oklch(0.92 0.01 75);
-  --popover: oklch(0.22 0.015 75);
+  --popover: oklch(0.22 0.005 240);
   --popover-foreground: oklch(0.92 0.01 75);
 
   /* Adjusted dark mode primary for better contrast */
   --primary: oklch(0.55 0.1 145);
   --primary-foreground: oklch(0.15 0.015 145);
 
-  --secondary: oklch(0.26 0.015 75);
+  --secondary: oklch(0.26 0.005 240);
   --secondary-foreground: oklch(0.88 0.01 75);
-  --muted: oklch(0.26 0.015 75);
+  --muted: oklch(0.26 0.005 240);
   --muted-foreground: oklch(0.62 0.015 75);
 
-  --accent: oklch(0.3 0.025 140);
+  --accent: oklch(0.3 0.02 140);
   --accent-foreground: oklch(0.88 0.015 140);
 
   --destructive: oklch(0.48 0.15 25);
   --destructive-foreground: oklch(0.95 0.01 25);
 
-  --border: oklch(0.32 0.015 75);
-  --input: oklch(0.32 0.015 75);
+  --border: oklch(0.32 0.005 240);
+  --input: oklch(0.32 0.005 240);
   --ring: oklch(0.62 0.08 145);
 
   --chart-1: oklch(0.6 0.12 145);
@@ -99,22 +99,22 @@
   --chart-4: oklch(0.7 0.1 130);
   --chart-5: oklch(0.75 0.08 155);
 
-  --sidebar: oklch(0.2 0.015 75);
+  --sidebar: oklch(0.2 0.005 240);
   --sidebar-foreground: oklch(0.92 0.01 75);
   --sidebar-primary: oklch(0.62 0.08 145);
   --sidebar-primary-foreground: oklch(0.15 0.015 145);
-  --sidebar-accent: oklch(0.26 0.015 75);
+  --sidebar-accent: oklch(0.26 0.005 240);
   --sidebar-accent-foreground: oklch(0.88 0.01 75);
-  --sidebar-border: oklch(0.32 0.015 75);
+  --sidebar-border: oklch(0.32 0.005 240);
   --sidebar-ring: oklch(0.5 0.05 145);
 
   /* Zone colors for dark mode */
   --high: oklch(0.58 0.08 145);
-  --high-bg: oklch(0.24 0.02 145);
+  --high-bg: oklch(0.24 0.015 145);
   --medium: oklch(0.58 0.06 160);
-  --medium-bg: oklch(0.24 0.015 160);
+  --medium-bg: oklch(0.24 0.01 160);
   --low: oklch(0.58 0.04 175);
-  --low-bg: oklch(0.24 0.01 175);
+  --low-bg: oklch(0.24 0.008 175);
 }
 
 @theme inline {
