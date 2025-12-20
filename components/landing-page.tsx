@@ -114,7 +114,7 @@ export function LandingPage() {
 
       {/* Footer */}
       <footer className="py-8 px-4 text-center text-sm text-muted-foreground border-t">
-        <p>Purpose Built Values Cards</p>
+        <p>Part of the Purpose Built Framework™</p>
       </footer>
     </main>
   )
