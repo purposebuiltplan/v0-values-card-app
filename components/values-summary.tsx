@@ -43,11 +43,7 @@ export function ValuesSummary({
   // Email form state
   const [showEmailForm, setShowEmailForm] = useState(false)
   const [emailToAddress, setEmailToAddress] = useState("")
-  const [emailFromAddress, setEmailFromAddress] = useState("")
   const [emailFromName, setEmailFromName] = useState(userName || "")
-  const [isSendingEmail, setIsSendingEmail] = useState(false)
-  const [emailSuccess, setEmailSuccess] = useState(false)
-  const [emailError, setEmailError] = useState("")
 
   useEffect(() => {
     if (saveTimeoutRef.current) {
@@ -96,38 +92,22 @@ export function ValuesSummary({
     alert("Link copied to clipboard!")
   }
 
-  const handleSendEmail = async (e: React.FormEvent) => {
+  const handleEmailReport = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSendingEmail(true)
-    setEmailError("")
-    setEmailSuccess(false)
+    const name = emailFromName || "Someone"
+    const resultsUrl = `${window.location.origin}/values/${shareSlug}`
+    const appUrl = window.location.origin
 
-    try {
-      const res = await fetch("/api/email-report", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          toEmail: emailToAddress,
-          fromEmail: emailFromAddress,
-          fromName: emailFromName,
-          shareSlug,
-        }),
-      })
+    const subject = `${name} shared their Values Card Results with You`
+    const body = `Hi,
 
-      const data = await res.json()
+${name} wanted to share their results from the Values Card Exercise. Please visit the link below to view them:
 
-      if (!res.ok) {
-        setEmailError(data.error || "Failed to send email.")
-        return
-      }
+${resultsUrl}
 
-      setEmailSuccess(true)
-      setEmailToAddress("")
-    } catch {
-      setEmailError("Something went wrong. Please try again.")
-    } finally {
-      setIsSendingEmail(false)
-    }
+Click here to complete your own Values Card exercise for free: ${appUrl}`
+
+    window.location.href = `mailto:${encodeURIComponent(emailToAddress)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
   return (
@@ -289,9 +269,12 @@ export function ValuesSummary({
           {showEmailForm && (
             <div className="flex justify-center">
               <form
-                onSubmit={handleSendEmail}
+                onSubmit={handleEmailReport}
                 className="max-w-sm w-full space-y-3 mt-2 p-4 border border-border rounded-lg bg-card"
               >
+                <p className="text-sm text-muted-foreground">
+                  This will open your email client with a pre-filled message including a link to your results.
+                </p>
                 <div className="space-y-1.5">
                   <label htmlFor="email-to" className="text-sm font-medium text-foreground">
                     To Email
@@ -307,22 +290,8 @@ export function ValuesSummary({
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="email-from" className="text-sm font-medium text-foreground">
-                    From Email
-                  </label>
-                  <input
-                    id="email-from"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    value={emailFromAddress}
-                    onChange={(e) => setEmailFromAddress(e.target.value)}
-                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                  />
-                </div>
-                <div className="space-y-1.5">
                   <label htmlFor="email-from-name" className="text-sm font-medium text-foreground">
-                    From Name
+                    Your Name
                   </label>
                   <input
                     id="email-from-name"
@@ -334,22 +303,9 @@ export function ValuesSummary({
                     className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                   />
                 </div>
-                <Button type="submit" disabled={isSendingEmail} className="w-full">
-                  {isSendingEmail ? "Sending..." : "Send Report"}
+                <Button type="submit" className="w-full">
+                  Open Email Client
                 </Button>
-
-                {emailSuccess && (
-                  <div className="flex items-center gap-2 text-sm text-primary bg-primary/10 px-3 py-2 rounded-md">
-                    <Check className="w-4 h-4 shrink-0" />
-                    <span>Email sent successfully!</span>
-                  </div>
-                )}
-
-                {emailError && (
-                  <div className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
-                    {emailError}
-                  </div>
-                )}
               </form>
             </div>
           )}
