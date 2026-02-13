@@ -40,6 +40,15 @@ export function ValuesSummary({
   const [saved, setSaved] = useState(false)
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Email form state
+  const [showEmailForm, setShowEmailForm] = useState(false)
+  const [emailToAddress, setEmailToAddress] = useState("")
+  const [emailFromAddress, setEmailFromAddress] = useState("")
+  const [emailFromName, setEmailFromName] = useState(userName || "")
+  const [isSendingEmail, setIsSendingEmail] = useState(false)
+  const [emailSuccess, setEmailSuccess] = useState(false)
+  const [emailError, setEmailError] = useState("")
+
   useEffect(() => {
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current)
@@ -85,6 +94,40 @@ export function ValuesSummary({
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.origin)
     alert("Link copied to clipboard!")
+  }
+
+  const handleSendEmail = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSendingEmail(true)
+    setEmailError("")
+    setEmailSuccess(false)
+
+    try {
+      const res = await fetch("/api/email-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          toEmail: emailToAddress,
+          fromEmail: emailFromAddress,
+          fromName: emailFromName,
+          shareSlug,
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setEmailError(data.error || "Failed to send email.")
+        return
+      }
+
+      setEmailSuccess(true)
+      setEmailToAddress("")
+    } catch {
+      setEmailError("Something went wrong. Please try again.")
+    } finally {
+      setIsSendingEmail(false)
+    }
   }
 
   return (
@@ -224,12 +267,92 @@ export function ValuesSummary({
 
         {/* Actions - hidden in print */}
         <section className="space-y-3 print:hidden">
-          <div className="flex justify-center">
-            <Button variant="default" onClick={handleDownloadPDF} className="max-w-sm">
+          <div className="flex flex-col items-center gap-3">
+            <Button variant="default" onClick={handleDownloadPDF} className="max-w-sm w-full">
               <Download className="w-4 h-4 mr-2" />
               Download PDF Report
             </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowEmailForm(!showEmailForm)
+                setEmailSuccess(false)
+                setEmailError("")
+              }}
+              className="max-w-sm w-full"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Email Report
+            </Button>
           </div>
+
+          {showEmailForm && (
+            <div className="flex justify-center">
+              <form
+                onSubmit={handleSendEmail}
+                className="max-w-sm w-full space-y-3 mt-2 p-4 border border-border rounded-lg bg-card"
+              >
+                <div className="space-y-1.5">
+                  <label htmlFor="email-to" className="text-sm font-medium text-foreground">
+                    To Email
+                  </label>
+                  <input
+                    id="email-to"
+                    type="email"
+                    required
+                    placeholder="recipient@example.com"
+                    value={emailToAddress}
+                    onChange={(e) => setEmailToAddress(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label htmlFor="email-from" className="text-sm font-medium text-foreground">
+                    From Email
+                  </label>
+                  <input
+                    id="email-from"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={emailFromAddress}
+                    onChange={(e) => setEmailFromAddress(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label htmlFor="email-from-name" className="text-sm font-medium text-foreground">
+                    From Name
+                  </label>
+                  <input
+                    id="email-from-name"
+                    type="text"
+                    required
+                    placeholder="Your name"
+                    value={emailFromName}
+                    onChange={(e) => setEmailFromName(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  />
+                </div>
+                <Button type="submit" disabled={isSendingEmail} className="w-full">
+                  {isSendingEmail ? "Sending..." : "Send Report"}
+                </Button>
+
+                {emailSuccess && (
+                  <div className="flex items-center gap-2 text-sm text-primary bg-primary/10 px-3 py-2 rounded-md">
+                    <Check className="w-4 h-4 shrink-0" />
+                    <span>Email sent successfully!</span>
+                  </div>
+                )}
+
+                {emailError && (
+                  <div className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">
+                    {emailError}
+                  </div>
+                )}
+              </form>
+            </div>
+          )}
         </section>
 
         {/* What's Next section with three CTAs */}
