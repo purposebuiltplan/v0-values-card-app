@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     const otherHighValues = allCards.filter((c) => c.priority === "high" && !c.isCore)
 
     // Generate PDF
-    const pdfBuffer = await generateReportPDF(
+    const pdfBuffer = generateReportPDF(
       session.user_name,
       coreValues,
       otherHighValues,
