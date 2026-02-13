@@ -47,14 +47,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Map to ValueCard format
-    const allCards: ValueCard[] = sessionValues.map((sv: Record<string, unknown>) => ({
-      id: (sv.value_master_id as string) || (sv.id as string),
-      sessionValueId: sv.id as string,
-      label: (sv.custom_label as string) || (sv.values_master as Record<string, unknown>)?.label as string || "Unknown",
-      description: (sv.custom_description as string) || (sv.values_master as Record<string, unknown>)?.description as string || null,
-      priority: sv.priority as string,
-      isCore: sv.is_core as boolean,
-      customDescription: sv.custom_description as string | null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const allCards: ValueCard[] = sessionValues.map((sv: any) => ({
+      id: sv.value_master_id || sv.id,
+      sessionValueId: sv.id,
+      label: sv.custom_label || sv.values_master?.label || "Unknown",
+      description: sv.custom_description || sv.values_master?.description || null,
+      priority: sv.priority,
+      isCore: sv.is_core,
+      customDescription: sv.custom_description || null,
       isCustom: !sv.value_master_id,
     }))
 
@@ -70,9 +71,8 @@ export async function POST(request: NextRequest) {
     )
 
     // Build the app URL
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://v0-values-card-app.vercel.app"
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://v0-values-card-app.vercel.app")
 
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
       attachments: [
         {
           filename: `${fromName.replace(/[^a-zA-Z0-9 ]/g, "")}-values-report.pdf`,
-          content: pdfBuffer,
+          content: pdfBuffer.toString("base64"),
         },
       ],
     })
