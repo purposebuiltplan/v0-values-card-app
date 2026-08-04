@@ -13,13 +13,15 @@ export async function generateMetadata({ params }: PageProps) {
   const session = await getSessionBySlug(slug)
 
   if (!session) {
-    return { title: "Values Summary Not Found" }
+    return { title: "Values Summary Not Found", robots: { index: false, follow: false } }
   }
 
   const name = session.user_name || "Someone"
   return {
     title: `${name}'s Core Values | Purpose Built Values Cards`,
     description: `See ${name}'s core values from the Purpose Built Values Cards exercise.`,
+    // Personal results (with the participant's name) must never be indexed by search engines.
+    robots: { index: false, follow: false },
   }
 }
 
@@ -52,6 +54,7 @@ export default async function ValuesSummaryPage({ params, searchParams }: PagePr
   return (
     <ValuesSummary
       userName={session.user_name}
+      completedAt={session.completed_at}
       coreValues={coreValues}
       otherHighValues={otherHighValues}
       shareSlug={slug}

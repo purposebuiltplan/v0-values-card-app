@@ -11,12 +11,22 @@ import { Star, Download, Share2, Sparkles, Save, Check, ArrowLeft, Home, Mail, L
 
 interface ValuesSummaryProps {
   userName: string | null
+  completedAt?: string | null
   coreValues: ValueCard[]
   otherHighValues: ValueCard[]
   shareSlug: string
   sessionId: string
   isNew?: boolean
   initialReflections?: Record<string, string> | null
+}
+
+function formatCompleted(iso: string | null | undefined): string | null {
+  if (!iso) return null
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return null
+  const date = d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  const time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+  return `${date} at ${time}`
 }
 
 const REFLECTION_PROMPTS = [
@@ -27,6 +37,7 @@ const REFLECTION_PROMPTS = [
 
 export function ValuesSummary({
   userName,
+  completedAt = null,
   coreValues,
   otherHighValues,
   shareSlug,
@@ -34,6 +45,7 @@ export function ValuesSummary({
   isNew = false,
   initialReflections = null,
 }: ValuesSummaryProps) {
+  const completedLabel = formatCompleted(completedAt)
   const router = useRouter()
   const [reflections, setReflections] = useState<Record<string, string>>(initialReflections || {})
   const [isSaving, setIsSaving] = useState(false)
@@ -148,6 +160,12 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
             {userName ? `${userName}'s Core Values` : "Your Core Values"}
           </h1>
           <p className="text-muted-foreground print:text-xs">The values that matter most to you, all in one place.</p>
+          {(userName || completedLabel) && (
+            <p className="text-sm text-muted-foreground mt-2 print:text-[10px] print:mt-1">
+              {userName ? `Completed by ${userName}` : "Completed"}
+              {completedLabel ? ` · ${completedLabel}` : ""}
+            </p>
+          )}
         </header>
 
         <section className="mb-10 print:mb-3">
@@ -256,8 +274,6 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
               variant="outline"
               onClick={() => {
                 setShowEmailForm(!showEmailForm)
-                setEmailSuccess(false)
-                setEmailError("")
               }}
               className="max-w-sm w-full"
             >

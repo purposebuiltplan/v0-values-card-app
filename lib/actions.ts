@@ -4,11 +4,17 @@ import { createClient } from "@/lib/supabase/server"
 import { nanoid } from "nanoid"
 import type { Session, SessionValue, ValueMaster } from "@/lib/types"
 
-export async function createSession(): Promise<Session> {
+export async function createSession(userName?: string | null): Promise<Session> {
   const supabase = await createClient()
 
-  // Create a new session
-  const { data: session, error: sessionError } = await supabase.from("sessions").insert({}).select().single()
+  // Create a new session, storing the participant's name up front so the
+  // report is always attributable (and survives even if they never open the
+  // email/share step).
+  const { data: session, error: sessionError } = await supabase
+    .from("sessions")
+    .insert({ user_name: userName?.trim() || null })
+    .select()
+    .single()
 
   if (sessionError || !session) {
     console.error("[v0] Session creation error:", sessionError)
@@ -161,10 +167,16 @@ export async function finalizeSession(
   const shareSlug = nanoid(10)
 
   const updateData: Record<string, unknown> = {
-    user_name: userName,
     slug: shareSlug,
     completed_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
+  }
+
+  // Only overwrite the name when one is explicitly passed here — the name is
+  // now captured up front at session creation, and the core-values step
+  // finalizes with null, so we must not clobber the existing name.
+  if (userName != null && userName.trim() !== "") {
+    updateData.user_name = userName.trim()
   }
 
   // Only include email if provided

@@ -3,17 +3,20 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { createSession } from "@/lib/actions"
 import { Sparkles, ArrowRight, Heart, Target, FileText } from "lucide-react"
 
 export function LandingPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const [name, setName] = useState("")
   const router = useRouter()
 
   async function handleStart() {
+    if (!name.trim()) return
     setIsLoading(true)
     try {
-      const session = await createSession()
+      const session = await createSession(name.trim())
       router.push(`/exercise/${session.id}/sort`)
     } catch (error) {
       console.error("Failed to create session:", error)
@@ -40,16 +43,37 @@ export function LandingPage() {
             clear, personalized summary.
           </p>
 
-          <Button size="lg" onClick={handleStart} disabled={isLoading} className="text-lg px-8 py-6 h-auto gap-2">
-            {isLoading ? (
-              "Creating your session..."
-            ) : (
-              <>
-                Start the values card exercise
-                <ArrowRight className="w-5 h-5" />
-              </>
-            )}
-          </Button>
+          <div className="w-full max-w-sm mx-auto space-y-3">
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleStart()
+              }}
+              placeholder="Your name"
+              aria-label="Your name"
+              autoComplete="name"
+              className="h-12 text-center text-lg"
+            />
+            <Button
+              size="lg"
+              onClick={handleStart}
+              disabled={isLoading || !name.trim()}
+              className="w-full text-lg px-8 py-6 h-auto gap-2"
+            >
+              {isLoading ? (
+                "Creating your session..."
+              ) : (
+                <>
+                  Start the values card exercise
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              Your name and completion date are printed on your report, so it's clear whose it is.
+            </p>
+          </div>
 
           <p className="text-sm text-muted-foreground">Takes about 10 minutes. No account required.</p>
         </div>
