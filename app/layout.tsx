@@ -1,13 +1,27 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Fraunces, Barlow_Condensed, Roboto } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { SiteHeader } from "@/components/site-header"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-const _inter = Inter({ subsets: ["latin"] })
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+})
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow-condensed",
+  display: "swap",
+})
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Purpose Built Values Cards",
@@ -49,12 +63,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`bg-background ${fraunces.variable} ${barlowCondensed.variable} ${roboto.variable}`}
+    >
       <body className="font-sans antialiased">
         <ThemeProvider>
-          <div className="fixed top-4 right-4 z-50 print:hidden">
-            <ThemeToggle />
-          </div>
+          <SiteHeader />
           {children}
         </ThemeProvider>
         <Analytics />
