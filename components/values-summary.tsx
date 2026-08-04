@@ -111,7 +111,7 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
   }
 
   return (
-    <div className="min-h-screen bg-background print:min-h-0 print:bg-transparent">
+    <div className="min-h-screen bg-background dark:bg-transparent print:min-h-0 print:bg-transparent">
       {/* Success Banner for new completions */}
       {isNew && (
         <div className="bg-primary text-primary-foreground py-3 px-4 text-center print:hidden">
@@ -159,21 +159,21 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
             {coreValues.map((value) => (
               <Card
                 key={value.sessionValueId}
-                className="border-primary/20 bg-primary/5 print:shadow-none print:border print:p-2"
+                className="border-primary/40 bg-card print:shadow-none print:border print:p-2"
               >
                 <CardHeader className="pb-2 print:p-0 print:pb-1">
                   <CardTitle className="flex items-center gap-2 text-lg print:text-sm print:font-semibold">
                     <Star className="w-5 h-5 text-primary fill-primary shrink-0 print:w-3 print:h-3" />
                     {value.label}
                     {value.isCustom && (
-                      <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded font-normal print:text-[9px] print:px-1">
+                      <span className="text-xs text-card-muted-foreground bg-black/5 px-1.5 py-0.5 rounded font-normal print:text-[9px] print:px-1">
                         Custom
                       </span>
                     )}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="print:p-0">
-                  <p className="text-muted-foreground print:text-xs print:leading-tight">
+                  <p className="text-card-muted-foreground print:text-xs print:leading-tight">
                     {value.customDescription || value.description || "No description provided."}
                   </p>
                 </CardContent>
@@ -201,11 +201,11 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
         )}
 
         <section className="mb-10 print:mb-0">
-          <Card className="bg-muted/50 print:bg-transparent print:shadow-none print:border-none">
+          <Card className="bg-card print:bg-transparent print:shadow-none print:border-none">
             <CardHeader className="print:p-0 print:pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg print:text-base">Reflection prompts</CardTitle>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground print:hidden">
+                <div className="flex items-center gap-2 text-sm text-card-muted-foreground print:hidden">
                   {isSaving && (
                     <>
                       <Save className="w-4 h-4 animate-pulse" />
@@ -224,7 +224,7 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
             <CardContent className="space-y-6 print:space-y-2 print:p-0">
               {REFLECTION_PROMPTS.map((item) => (
                 <div key={item.id} className="space-y-2 print:space-y-1">
-                  <label className="flex gap-3 text-muted-foreground print:text-xs print:gap-1">
+                  <label className="flex gap-3 text-card-muted-foreground print:text-xs print:gap-1">
                     <span className="text-primary">•</span>
                     {item.prompt}
                   </label>
@@ -272,11 +272,11 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
                 onSubmit={handleEmailReport}
                 className="max-w-sm w-full space-y-3 mt-2 p-4 border border-border rounded-lg bg-card"
               >
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-card-muted-foreground">
                   This will open your email client with a pre-filled message including a link to your results.
                 </p>
                 <div className="space-y-1.5">
-                  <label htmlFor="email-to" className="text-sm font-medium text-foreground">
+                  <label htmlFor="email-to" className="text-sm font-medium text-card-foreground">
                     To Email
                   </label>
                   <input
@@ -290,7 +290,7 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="email-from-name" className="text-sm font-medium text-foreground">
+                  <label htmlFor="email-from-name" className="text-sm font-medium text-card-foreground">
                     Your Name
                   </label>
                   <input
@@ -317,16 +317,16 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* Share Exercise */}
-            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+            <Card className="bg-card border border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 ring-1 ring-primary/40 flex items-center justify-center">
                     <Share2 className="w-6 h-6 text-primary" />
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Share Exercise</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Send this assessment to friends or family</p>
+                  <p className="text-sm text-card-muted-foreground mb-4">Send this assessment to friends or family</p>
                 </div>
                 <Button variant="outline" className="w-full bg-background" onClick={handleCopyLink}>
                   Copy Share Link
@@ -335,16 +335,16 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
             </Card>
 
             {/* Newsletter */}
-            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+            <Card className="bg-card border border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 ring-1 ring-primary/40 flex items-center justify-center">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Financial clarity for faith-driven founders.</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-card-muted-foreground mb-4">
                     Enjoyed this exercise? Each week I share simple, purposeful tools to help founders slow down, get
                     clear, and make intentional decisions for their life, family, and finances.
                   </p>
@@ -358,16 +358,16 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
             </Card>
 
             {/* Balance Wheel Exercise */}
-            <Card className="bg-secondary/50 border border-border hover:shadow-lg transition-shadow">
+            <Card className="bg-card border border-border hover:shadow-lg transition-shadow">
               <CardContent className="pt-6 text-center space-y-4">
                 <div className="flex justify-center">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 ring-1 ring-primary/40 flex items-center justify-center">
                     <Lightbulb className="w-6 h-6 text-primary" />
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Balance Wheel Exercise</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Assess life balance across key areas in minutes</p>
+                  <p className="text-sm text-card-muted-foreground mb-4">Assess life balance across key areas in minutes</p>
                 </div>
                 <Button variant="outline" className="w-full bg-background" asChild>
                   <a href="https://v0-balance-wheel-app.vercel.app/" target="_blank" rel="noopener noreferrer">

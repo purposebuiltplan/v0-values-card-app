@@ -167,7 +167,7 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark:bg-transparent">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b px-4 py-3">
         <div className="max-w-7xl mx-auto">
@@ -330,7 +330,7 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
                         {zoneCards.map((card) => (
                           <div
                             key={card.sessionValueId}
-                            className="bg-card border rounded-lg px-3 py-2 text-sm font-medium shadow-sm cursor-grab text-center"
+                            className="bg-card text-card-foreground border rounded-lg px-3 py-2 text-sm font-medium shadow-sm cursor-grab text-center"
                             draggable
                             onDragStart={(e) => {
                               e.dataTransfer.setData("application/json", JSON.stringify(card))

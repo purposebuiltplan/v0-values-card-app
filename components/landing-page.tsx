@@ -26,7 +26,7 @@ export function LandingPage() {
       {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-4 py-16 text-center">
         <div className="max-w-2xl mx-auto space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 ring-1 ring-primary/40 text-primary text-sm font-medium">
             <Sparkles className="w-4 h-4" />
             <span>Free values exercise</span>
           </div>
@@ -62,7 +62,7 @@ export function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-primary/15 ring-1 ring-primary/40 flex items-center justify-center">
                 <Target className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-lg font-semibold">Sort your values</h3>
@@ -72,8 +72,8 @@ export function LandingPage() {
             </div>
 
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center">
-                <Heart className="w-8 h-8 text-accent-foreground" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/15 ring-1 ring-primary/40 flex items-center justify-center">
+                <Heart className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-lg font-semibold">Choose your Core Values</h3>
               <p className="text-muted-foreground">
@@ -82,7 +82,7 @@ export function LandingPage() {
             </div>
 
             <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-primary/15 ring-1 ring-primary/40 flex items-center justify-center">
                 <FileText className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-lg font-semibold">Review your summary</h3>

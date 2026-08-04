@@ -13,6 +13,8 @@
   /* White paper cards (#fffdf9) */
   --card: #fffdf9;
   --card-foreground: #1a3648;
+  /* Slate muted text that stays readable on light/cream cards in BOTH themes */
+  --card-muted-foreground: #6d6250;
   --popover: #fffdf9;
   --popover-foreground: #1a3648;
 
@@ -76,6 +78,8 @@
   /* Cream physical cards (#f6ede0) with navy text */
   --card: #f6ede0;
   --card-foreground: #1a3648;
+  /* Slate muted text - readable on the cream card surface */
+  --card-muted-foreground: #6d6250;
   --popover: #f6ede0;
   --popover-foreground: #1a3648;
 
@@ -134,6 +138,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-card-muted-foreground: var(--card-muted-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -187,15 +192,18 @@
       color 0.4s ease;
   }
 
-  /* Deep navy "table" - radial from #22475d to #15303f */
+  /* Deep navy "table" - radial glow from a lighter navy at top to deep navy edges */
   .dark body {
-    background-color: #15303f;
+    background-color: #14303f;
     background-image: radial-gradient(
-      circle at 50% 0%,
-      #22475d 0%,
-      #15303f 70%
+      120% 100% at 50% -8%,
+      #2b566f 0%,
+      #1d3f52 40%,
+      #142d3c 72%,
+      #102633 100%
     );
     background-attachment: fixed;
+    background-repeat: no-repeat;
   }
 
   /* Ease color/background/border/shadow changes across the UI on theme toggle */

@@ -55,7 +55,7 @@ export function ValueCardComponent({
   return (
     <div
       className={`
-        group relative bg-card rounded-xl border shadow-sm transition-all
+        group relative bg-card text-card-foreground rounded-xl border shadow-sm transition-all
         ${compact ? "p-3" : prominent ? "p-6" : "p-4"}
         ${selectable ? "cursor-pointer hover:border-primary" : ""}
         ${selected ? "ring-2 ring-primary border-primary bg-primary/5" : ""}
@@ -71,7 +71,7 @@ export function ValueCardComponent({
     >
       <div className="flex items-start gap-3">
         {draggable && (
-          <div className="hidden lg:flex items-center text-muted-foreground/50 -ml-1">
+          <div className="hidden lg:flex items-center text-card-foreground/30 -ml-1">
             <GripVertical className="w-5 h-5" />
           </div>
         )}
@@ -84,12 +84,12 @@ export function ValueCardComponent({
               {card.label}
             </span>
             {card.isCustom && (
-              <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">Custom</span>
+              <span className="text-xs text-card-muted-foreground bg-black/5 px-1.5 py-0.5 rounded">Custom</span>
             )}
           </div>
 
           {prominent && card.description && (
-            <p className="text-muted-foreground mt-2 text-sm leading-relaxed text-center">{card.description}</p>
+            <p className="text-card-muted-foreground mt-2 text-sm leading-relaxed text-center">{card.description}</p>
           )}
         </div>
 
@@ -97,7 +97,7 @@ export function ValueCardComponent({
           <Popover open={showTooltip} onOpenChange={setShowTooltip}>
             <PopoverTrigger asChild>
               <button
-                className="p-1 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                className="p-1 rounded-full hover:bg-black/5 text-card-muted-foreground hover:text-card-foreground transition-colors"
                 onClick={(e) => {
                   e.stopPropagation()
                   setShowTooltip(!showTooltip)

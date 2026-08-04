@@ -115,7 +115,7 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark:bg-transparent">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b px-4 py-3">
         <div className="max-w-5xl mx-auto">
@@ -172,14 +172,14 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
                 return (
                   <div
                     key={card.sessionValueId}
-                    className="p-4 bg-primary/5 border-2 border-primary rounded-xl flex flex-col"
+                    className="p-4 bg-card text-card-foreground border-2 border-primary rounded-xl flex flex-col shadow-sm"
                   >
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div className="flex items-center gap-2 min-w-0">
                         <Star className="w-4 h-4 text-primary fill-primary shrink-0" />
                         <h3 className="font-semibold text-base truncate">{card.label}</h3>
                         {card.isCustom && (
-                          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded shrink-0">
+                          <span className="text-xs text-card-muted-foreground bg-black/5 px-1.5 py-0.5 rounded shrink-0">
                             Custom
                           </span>
                         )}
@@ -188,13 +188,13 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
                         variant="ghost"
                         size="sm"
                         onClick={() => handleToggleCore(card)}
-                        className="text-muted-foreground hover:text-destructive shrink-0 h-7 px-2"
+                        className="text-card-muted-foreground hover:text-destructive shrink-0 h-7 px-2"
                       >
                         <X className="w-4 h-4" />
                       </Button>
                     </div>
                     <div className="space-y-1.5 flex-1">
-                      <label className="text-xs text-muted-foreground">Description (edit to personalize)</label>
+                      <label className="text-xs text-card-muted-foreground">Description (edit to personalize)</label>
                       <Textarea
                         value={currentDescription}
                         onChange={(e) => handleDescriptionChange(card.sessionValueId, e.target.value)}
@@ -223,25 +223,25 @@ export function CoreValuesSelection({ sessionId, initialCards }: CoreValuesSelec
               <button
                 key={card.sessionValueId}
                 onClick={() => handleToggleCore(card)}
-                className="p-3 bg-card border rounded-xl text-left hover:border-primary hover:bg-primary/5 transition-colors group"
+                className="p-3 bg-card text-card-foreground border rounded-xl text-left hover:border-primary transition-colors group shadow-sm"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/30 group-hover:border-primary shrink-0 mt-0.5" />
+                  <div className="w-5 h-5 rounded-full border-2 border-card-foreground/25 group-hover:border-primary shrink-0 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <h3 className="font-medium text-sm">{card.label}</h3>
                       {card.isCustom && (
-                        <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">Custom</span>
+                        <span className="text-xs text-card-muted-foreground bg-black/5 px-1.5 py-0.5 rounded">Custom</span>
                       )}
                     </div>
                     {card.description && (
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{card.description}</p>
+                      <p className="text-xs text-card-muted-foreground mt-1 line-clamp-2">{card.description}</p>
                     )}
                   </div>
                   <Popover>
                     <PopoverTrigger asChild>
                       <span
-                        className="p-1 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                        className="p-1 rounded-full hover:bg-black/5 text-card-muted-foreground hover:text-card-foreground transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Info className="w-4 h-4" />
