@@ -4,117 +4,125 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to warm neutral backgrounds with muted sage green accent */
-  /* Warm cream/tan background - same as Balance Wheel */
-  --background: oklch(0.96 0.015 75);
-  --foreground: oklch(0.2 0.01 75);
+  /* Purpose Financial Planning brand palette - light theme */
+  /* Warm cream page background (#f6eddf) */
+  --background: #f6eddf;
+  /* Navy text/headings (#1A3648) */
+  --foreground: #1a3648;
 
-  /* Warm off-white cards */
-  --card: oklch(0.98 0.01 75);
-  --card-foreground: oklch(0.2 0.01 75);
-  --popover: oklch(0.98 0.01 75);
-  --popover-foreground: oklch(0.2 0.01 75);
+  /* White paper cards (#fffdf9) */
+  --card: #fffdf9;
+  --card-foreground: #1a3648;
+  --popover: #fffdf9;
+  --popover-foreground: #1a3648;
 
-  /* Darkened sage green significantly for better visibility against cream background */
-  --primary: oklch(0.35 0.1 145);
-  --primary-foreground: oklch(0.98 0.005 145);
+  /* Gold interactive accent (#E3A764) */
+  --primary: #e3a764;
+  --primary-foreground: #1a3648;
 
-  /* Warm neutral secondary */
-  --secondary: oklch(0.91 0.015 75);
-  --secondary-foreground: oklch(0.25 0.01 75);
-  --muted: oklch(0.89 0.015 75);
-  --muted-foreground: oklch(0.48 0.015 75);
+  /* Deeper cream secondary (#efe3d1) */
+  --secondary: #efe3d1;
+  --secondary-foreground: #1a3648;
+  --muted: #efe3d1;
+  /* Slate muted text (#6d6250) */
+  --muted-foreground: #6d6250;
 
-  /* Soft accent with slightly more chroma */
-  --accent: oklch(0.88 0.025 140);
-  --accent-foreground: oklch(0.25 0.015 140);
+  /* Soft gold-tinted accent surface */
+  --accent: #f4e2c9;
+  --accent-foreground: #1a3648;
 
   --destructive: oklch(0.55 0.15 25);
   --destructive-foreground: oklch(0.98 0.005 25);
 
-  /* Warm neutral borders */
-  --border: oklch(0.85 0.015 75);
-  --input: oklch(0.85 0.015 75);
-  --ring: oklch(0.48 0.06 145);
+  /* Thin warm rules (#e7d8c1) */
+  --border: #e7d8c1;
+  --input: #e7d8c1;
+  /* Gold focus ring */
+  --ring: #e3a764;
 
-  --chart-1: oklch(0.55 0.1 145);
-  --chart-2: oklch(0.6 0.08 165);
-  --chart-3: oklch(0.5 0.06 185);
-  --chart-4: oklch(0.65 0.08 130);
-  --chart-5: oklch(0.7 0.06 155);
+  --chart-1: #e3a764;
+  --chart-2: #1a3648;
+  --chart-3: #6d6250;
+  --chart-4: #c98b47;
+  --chart-5: #2f5468;
 
-  --radius: 0.75rem;
+  --radius: 1rem;
 
-  --sidebar: oklch(0.96 0.015 75);
-  --sidebar-foreground: oklch(0.2 0.01 75);
-  --sidebar-primary: oklch(0.48 0.06 145);
-  --sidebar-primary-foreground: oklch(0.98 0.005 145);
-  --sidebar-accent: oklch(0.91 0.015 75);
-  --sidebar-accent-foreground: oklch(0.25 0.01 75);
-  --sidebar-border: oklch(0.85 0.015 75);
-  --sidebar-ring: oklch(0.7 0.03 145);
+  --sidebar: #efe3d1;
+  --sidebar-foreground: #1a3648;
+  --sidebar-primary: #e3a764;
+  --sidebar-primary-foreground: #1a3648;
+  --sidebar-accent: #f4e2c9;
+  --sidebar-accent-foreground: #1a3648;
+  --sidebar-border: #e7d8c1;
+  --sidebar-ring: #e3a764;
 
-  /* Zone colors with muted sage green tones */
-  --high: oklch(0.48 0.06 145);
-  --high-bg: oklch(0.94 0.02 145);
-  --medium: oklch(0.52 0.05 160);
-  --medium-bg: oklch(0.93 0.015 160);
-  --low: oklch(0.56 0.04 175);
-  --low-bg: oklch(0.92 0.01 175);
+  /* Zone colors - gold-forward, warm ranking tiers */
+  --high: #c98b47;
+  --high-bg: #f6e6cf;
+  --medium: #a98a63;
+  --medium-bg: #f0e6d5;
+  --low: #8c8472;
+  --low-bg: #efe7da;
 }
 
-/* Updated dark mode to use proper dark charcoal grey instead of greenish-brown */
+/* Purpose Financial Planning brand palette - dark theme (deep navy table) */
 .dark {
-  /* Cool dark charcoal grey backgrounds - neutral hue */
-  --background: oklch(0.18 0.005 240);
-  --foreground: oklch(0.92 0.01 75);
+  /* Deep navy table base (gradient applied on body below) */
+  --background: #15303f;
+  /* Body text on navy (#eaf1f5) */
+  --foreground: #eaf1f5;
 
-  --card: oklch(0.22 0.005 240);
-  --card-foreground: oklch(0.92 0.01 75);
-  --popover: oklch(0.22 0.005 240);
-  --popover-foreground: oklch(0.92 0.01 75);
+  /* Cream physical cards (#f6ede0) with navy text */
+  --card: #f6ede0;
+  --card-foreground: #1a3648;
+  --popover: #f6ede0;
+  --popover-foreground: #1a3648;
 
-  /* Adjusted dark mode primary for better contrast */
-  --primary: oklch(0.55 0.1 145);
-  --primary-foreground: oklch(0.15 0.015 145);
+  /* Gold interactive accent (#E3A764) */
+  --primary: #e3a764;
+  --primary-foreground: #1a3648;
 
-  --secondary: oklch(0.26 0.005 240);
-  --secondary-foreground: oklch(0.88 0.01 75);
-  --muted: oklch(0.26 0.005 240);
-  --muted-foreground: oklch(0.62 0.015 75);
+  /* Translucent navy surfaces that sit on the table */
+  --secondary: #1e3d50;
+  --secondary-foreground: #eaf1f5;
+  --muted: #1e3d50;
+  /* Muted body text on navy (#a9bcc7) */
+  --muted-foreground: #a9bcc7;
 
-  --accent: oklch(0.3 0.02 140);
-  --accent-foreground: oklch(0.88 0.015 140);
+  --accent: #26495e;
+  --accent-foreground: #eaf1f5;
 
-  --destructive: oklch(0.48 0.15 25);
-  --destructive-foreground: oklch(0.95 0.01 25);
+  --destructive: oklch(0.6 0.17 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
 
-  --border: oklch(0.32 0.005 240);
-  --input: oklch(0.32 0.005 240);
-  --ring: oklch(0.62 0.08 145);
+  --border: #2c5064;
+  --input: #2c5064;
+  /* Gold focus ring */
+  --ring: #e3a764;
 
-  --chart-1: oklch(0.6 0.12 145);
-  --chart-2: oklch(0.65 0.1 165);
-  --chart-3: oklch(0.55 0.08 185);
-  --chart-4: oklch(0.7 0.1 130);
-  --chart-5: oklch(0.75 0.08 155);
+  --chart-1: #e3a764;
+  --chart-2: #eaf1f5;
+  --chart-3: #a9bcc7;
+  --chart-4: #c98b47;
+  --chart-5: #7fa6b8;
 
-  --sidebar: oklch(0.2 0.005 240);
-  --sidebar-foreground: oklch(0.92 0.01 75);
-  --sidebar-primary: oklch(0.62 0.08 145);
-  --sidebar-primary-foreground: oklch(0.15 0.015 145);
-  --sidebar-accent: oklch(0.26 0.005 240);
-  --sidebar-accent-foreground: oklch(0.88 0.01 75);
-  --sidebar-border: oklch(0.32 0.005 240);
-  --sidebar-ring: oklch(0.5 0.05 145);
+  --sidebar: #15303f;
+  --sidebar-foreground: #eaf1f5;
+  --sidebar-primary: #e3a764;
+  --sidebar-primary-foreground: #1a3648;
+  --sidebar-accent: #26495e;
+  --sidebar-accent-foreground: #eaf1f5;
+  --sidebar-border: #2c5064;
+  --sidebar-ring: #e3a764;
 
-  /* Zone colors for dark mode */
-  --high: oklch(0.58 0.08 145);
-  --high-bg: oklch(0.24 0.015 145);
-  --medium: oklch(0.58 0.06 160);
-  --medium-bg: oklch(0.24 0.01 160);
-  --low: oklch(0.58 0.04 175);
-  --low-bg: oklch(0.24 0.008 175);
+  /* Zone colors on cream cards - warm gold-forward tiers */
+  --high: #c98b47;
+  --high-bg: #f4e3ca;
+  --medium: #a98a63;
+  --medium-bg: #eee2cf;
+  --low: #8c8472;
+  --low-bg: #e9e0d3;
 }
 
 @theme inline {
@@ -172,6 +180,40 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    min-height: 100vh;
+    /* Smooth transition when toggling themes */
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  /* Deep navy "table" - radial from #22475d to #15303f */
+  .dark body {
+    background-color: #15303f;
+    background-image: radial-gradient(
+      circle at 50% 0%,
+      #22475d 0%,
+      #15303f 70%
+    );
+    background-attachment: fixed;
+  }
+
+  /* Ease color/background/border/shadow changes across the UI on theme toggle */
+  .bg-background,
+  .bg-card,
+  .bg-popover,
+  .bg-secondary,
+  .bg-muted,
+  .bg-primary,
+  .text-foreground,
+  .text-card-foreground,
+  .text-muted-foreground,
+  .border {
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease,
+      color 0.4s ease,
+      box-shadow 0.4s ease;
   }
 }
 
