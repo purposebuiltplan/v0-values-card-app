@@ -91,14 +91,6 @@ export function ValuesSummary({
     window.print()
   }
 
-  const handleShareExercise = () => {
-    const subject = encodeURIComponent("Try this values exercise!")
-    const body = encodeURIComponent(
-      `Hey!\n\nI just completed a values card exercise that helped me clarify what matters most to me. I thought you might enjoy it too!\n\nTry it here: ${window.location.origin}\n\nIt only takes about 10-15 minutes and gives you a nice summary of your core values at the end.`,
-    )
-    window.location.href = `mailto:?subject=${subject}&body=${body}`
-  }
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.origin)
     alert("Link copied to clipboard!")
