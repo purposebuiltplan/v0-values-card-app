@@ -12,25 +12,22 @@ export function SiteFooter() {
           purposefp.com
         </a>
       </p>
+      <div className="mx-auto mt-6 max-w-3xl space-y-3 text-xs leading-relaxed print:mt-2 print:space-y-1 print:text-[9px]">
+        <p>
+          PurposeFP, LLC (&ldquo;Purpose Financial Planning&rdquo;) is a registered investment advisor offering
+          advisory services in the State of GA and in other jurisdictions where exempted. Registration does not imply a
+          certain level of skill or training. This values exercise is for educational purposes only and is not
+          investment, legal, or tax advice, nor an offer or solicitation for advisory services.
+        </p>
+        <p>
+          We collect only the name, values, and reflections you choose to enter &mdash; stored with our cloud provider
+          and automatically deleted after 14 days. We do not collect financial information. This tool uses Vercel Web
+          Analytics, which is cookieless, does not track individual users, and processes only anonymous, aggregated
+          metrics (such as page views and country-level location) to help us improve the tool. Links to third-party
+          sites are provided as a convenience; we are not responsible for their content.
+        </p>
+      </div>
       <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs print:mt-2">
-        <a
-          href="https://purposefp.com/privacy-policy/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline-offset-4 hover:text-foreground hover:underline"
-        >
-          Privacy Policy
-        </a>
-        <span aria-hidden="true">|</span>
-        <a
-          href="https://purposefp.com/?page_id=230"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline-offset-4 hover:text-foreground hover:underline"
-        >
-          Disclosures
-        </a>
-        <span aria-hidden="true">|</span>
         <a
           href="https://reports.adviserinfo.sec.gov/reports/ADV/331194/PDF/331194.pdf"
           target="_blank"
