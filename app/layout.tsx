@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Fraunces, Barlow_Condensed, Roboto } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
 import "./globals.css"
 
 const fraunces = Fraunces({
@@ -75,6 +76,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SiteHeader />
           {children}
+          <SiteFooter />
         </ThemeProvider>
         <Analytics />
       </body>

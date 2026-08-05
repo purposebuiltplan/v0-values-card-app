@@ -395,10 +395,6 @@ Click here to complete your own Values Card exercise for free: ${appUrl}`
           </div>
         </section>
 
-        {/* Footer - minimal for print */}
-        <footer className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground print:mt-4 print:pt-2 print:text-xs">
-          <p>Purpose Built Values Cards</p>
-        </footer>
       </main>
     </div>
   )
