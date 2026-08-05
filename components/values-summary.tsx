@@ -113,11 +113,16 @@ export function ValuesSummary({
     const subject = `${name} shared their Values Card Results with You`
     const body = `Hi,
 
-${name} wanted to share their results from the Values Card Exercise. Please visit the link below to view them:
+${name} wanted to share their results from the Values Card Exercise. You can view them here:
 
 ${resultsUrl}
 
-Click here to complete your own Values Card exercise for free: ${appUrl}`
+Please note: results pages are automatically deleted after 14 days to protect privacy. Use the Download PDF Report button on the page if you'd like to keep a copy.
+
+Want to discover your own core values? Take the free exercise here: ${appUrl}
+
+—
+This exercise is provided by PurposeFP, LLC ("Purpose Financial Planning"), a registered investment advisor, for educational purposes only. It is not investment, legal, or tax advice. Full disclosures are available on the site.`
 
     window.location.href = `mailto:${encodeURIComponent(emailToAddress)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
