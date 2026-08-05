@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Moon, Sun } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false)
@@ -13,11 +13,10 @@ export function ThemeToggle() {
     setIsDark(document.documentElement.classList.contains("dark"))
   }, [])
 
-  const toggleTheme = () => {
-    const newIsDark = !isDark
-    setIsDark(newIsDark)
+  const setTheme = (dark: boolean) => {
+    setIsDark(dark)
 
-    if (newIsDark) {
+    if (dark) {
       document.documentElement.classList.add("dark")
       localStorage.setItem("theme", "dark")
     } else {
@@ -26,18 +25,22 @@ export function ThemeToggle() {
     }
   }
 
+  // Render a stable placeholder until mounted so the label doesn't flash the
+  // wrong mode before the stored theme is read.
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="w-9 h-9">
+      <div className="flex h-9 items-center gap-2 text-sm text-muted-foreground">
         <Sun className="w-4 h-4" />
-      </Button>
+        <Switch aria-label="Toggle dark mode" disabled />
+      </div>
     )
   }
 
   return (
-    <Button variant="ghost" size="icon" className="w-9 h-9" onClick={toggleTheme}>
-      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+    <label className="flex h-9 cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+      {isDark ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+      <span>{isDark ? "Dark mode" : "Light mode"}</span>
+      <Switch checked={isDark} onCheckedChange={setTheme} aria-label="Toggle dark mode" />
+    </label>
   )
 }
