@@ -12,6 +12,43 @@ export function SiteFooter() {
           purposefp.com
         </a>
       </p>
+      <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs print:mt-2">
+        <a
+          href="https://purposefp.com/privacy-policy/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline-offset-4 hover:text-foreground hover:underline"
+        >
+          Privacy Policy
+        </a>
+        <span aria-hidden="true">|</span>
+        <a
+          href="https://purposefp.com/?page_id=230"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline-offset-4 hover:text-foreground hover:underline"
+        >
+          Disclosures
+        </a>
+        <span aria-hidden="true">|</span>
+        <a
+          href="https://reports.adviserinfo.sec.gov/reports/ADV/331194/PDF/331194.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline-offset-4 hover:text-foreground hover:underline"
+        >
+          ADV Part 1
+        </a>
+        <span aria-hidden="true">|</span>
+        <a
+          href="https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1011497"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline-offset-4 hover:text-foreground hover:underline"
+        >
+          ADV Part 2
+        </a>
+      </p>
     </footer>
   )
 }
