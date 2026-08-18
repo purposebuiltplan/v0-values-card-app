@@ -20,11 +20,17 @@ export function SiteFooter() {
           investment, legal, or tax advice, nor an offer or solicitation for advisory services.
         </p>
         <p>
-          We collect only the name, values, and reflections you choose to enter &mdash; stored with our cloud provider
-          and automatically deleted after 14 days. We do not collect financial information. This tool uses Vercel Web
-          Analytics, which is cookieless, does not track individual users, and processes only anonymous, aggregated
-          metrics (such as page views and country-level location) to help us improve the tool. Links to third-party
-          sites are provided as a convenience; we are not responsible for their content.
+          Results pages are automatically deleted after 14 days. See our{" "}
+          <a
+            href="https://purposefp.com/privacy-policy/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-offset-4 underline hover:text-foreground"
+          >
+            Privacy Policy
+          </a>{" "}
+          for how we collect, use, and protect your information. Links to third-party sites are provided as a
+          convenience; we are not responsible for their content.
         </p>
       </div>
       <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs print:mt-2">
