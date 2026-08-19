@@ -114,7 +114,7 @@ Please note: results pages are automatically deleted after 14 days to protect pr
 Want to discover your own core values? Take the free exercise here: ${appUrl}
 
 —
-This exercise is provided by PurposeFP, LLC ("Purpose Financial Planning"), a registered investment advisor, for educational purposes only. It is not investment, legal, or tax advice. Full disclosures are available on the site.`
+This exercise is provided by PurposeFP, LLC ("Purpose Financial Planning"), a registered investment adviser, for educational purposes only. It is not investment, legal, or tax advice. Full disclosures are available on the site.`
 
     window.location.href = `mailto:${encodeURIComponent(emailToAddress)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }

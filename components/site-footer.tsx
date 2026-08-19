@@ -14,8 +14,8 @@ export function SiteFooter() {
       </p>
       <div className="mx-auto mt-6 max-w-3xl space-y-3 text-xs leading-relaxed print:mt-2 print:space-y-1 print:text-[9px]">
         <p>
-          PurposeFP, LLC (&ldquo;Purpose Financial Planning&rdquo;) is a registered investment advisor offering
-          advisory services in the State of GA and in other jurisdictions where exempted. Registration does not imply a
+          PurposeFP, LLC (&ldquo;Purpose Financial Planning&rdquo;) is a registered investment adviser offering
+          advisory services in the State of Georgia and in other jurisdictions where exempted. Registration does not imply a
           certain level of skill or training. This values exercise is for educational purposes only and is not
           investment, legal, or tax advice.
         </p>
