@@ -127,32 +127,30 @@ export function ValueCardComponent({
             <Star className="w-4 h-4 mr-2" />
             Very Important
           </Button>
-          <div className="flex gap-2">
-            <Button
-              variant={card.priority === "medium" ? "secondary" : "outline"}
-              size="sm"
-              className="flex-1 h-10 text-sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleQuickMove("medium")
-              }}
-            >
-              <Check className="w-4 h-4 mr-1.5" />
-              Matters
-            </Button>
-            <Button
-              variant={card.priority === "low" ? "secondary" : "outline"}
-              size="sm"
-              className="flex-1 h-10 text-sm"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleQuickMove("low")
-              }}
-            >
-              <X className="w-4 h-4 mr-1.5" />
-              Not Me
-            </Button>
-          </div>
+          <Button
+            variant={card.priority === "medium" ? "secondary" : "outline"}
+            size="sm"
+            className="w-full h-11 text-sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleQuickMove("medium")
+            }}
+          >
+            <Check className="w-4 h-4 mr-2" />
+            Matters to Me
+          </Button>
+          <Button
+            variant={card.priority === "low" ? "secondary" : "outline"}
+            size="sm"
+            className="w-full h-11 text-sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleQuickMove("low")
+            }}
+          >
+            <X className="w-4 h-4 mr-2" />
+            Low Priority
+          </Button>
         </div>
       )}
 

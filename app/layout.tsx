@@ -27,7 +27,7 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Purpose Built Values Cards",
   description:
-    "Clarify your core values in just a few minutes. Sort value cards, pick your Core 4-7, and get a fun summary emailed to you.",
+    "Clarify your core values in just a few minutes. Sort value cards, pick your Core 4-7, and download a summary report you can keep or share.",
   generator: "v0.app",
 }
 

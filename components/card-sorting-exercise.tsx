@@ -206,7 +206,9 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
             <Info className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
             <div className="space-y-1">
               <p className="text-sm text-foreground">
-                <span className="hidden lg:inline">Drag each card to the zone that fits best. </span>
+                <span className="hidden lg:inline">
+                  Drag each card to the zone that fits best, or use the buttons on the card.{" "}
+                </span>
                 <span className="lg:hidden">Tap the buttons to sort each card. </span>
                 Is it essential to who you are, or not really you?
               </p>
@@ -277,8 +279,10 @@ export function CardSortingExercise({ sessionId, initialCards }: CardSortingExer
 
             {currentCard ? (
               <div className="max-w-md mx-auto w-full">
-                <ValueCardComponent card={currentCard} prominent draggable />
-                <p className="text-center text-xs text-muted-foreground mt-4">Drag this card to a zone on the right</p>
+                <ValueCardComponent card={currentCard} onMove={handleMoveCard} prominent draggable mobileActions />
+                <p className="text-center text-xs text-muted-foreground mt-4">
+                  Drag this card to a zone on the right, or use the buttons above
+                </p>
               </div>
             ) : (
               <div className="text-center py-12 bg-muted/30 rounded-xl border-2 border-dashed">
