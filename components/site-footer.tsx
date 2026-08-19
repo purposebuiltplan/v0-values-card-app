@@ -17,7 +17,7 @@ export function SiteFooter() {
           PurposeFP, LLC (&ldquo;Purpose Financial Planning&rdquo;) is a registered investment advisor offering
           advisory services in the State of GA and in other jurisdictions where exempted. Registration does not imply a
           certain level of skill or training. This values exercise is for educational purposes only and is not
-          investment, legal, or tax advice, nor an offer or solicitation for advisory services.
+          investment, legal, or tax advice.
         </p>
         <p>
           Results pages are automatically deleted after 14 days. See our{" "}
