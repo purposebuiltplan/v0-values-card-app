@@ -15,3 +15,6 @@ out/
 # Misc
 *.log
 .DS_Store
+
+# Next.js generated type reference
+next-env.d.ts
