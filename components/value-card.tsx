@@ -11,7 +11,6 @@ import { Info, Star, Check, X, GripVertical } from "lucide-react"
 interface ValueCardComponentProps {
   card: ValueCard
   onMove?: (card: ValueCard, newPriority: Priority) => void
-  showQuickActions?: boolean
   compact?: boolean
   selectable?: boolean
   selected?: boolean
@@ -24,7 +23,6 @@ interface ValueCardComponentProps {
 export function ValueCardComponent({
   card,
   onMove,
-  showQuickActions = false,
   compact = false,
   selectable = false,
   selected = false,
@@ -154,46 +152,6 @@ export function ValueCardComponent({
         </div>
       )}
 
-      {showQuickActions && !mobileActions && onMove && (
-        <div className="flex gap-1 mt-2 pt-2 border-t lg:hidden">
-          <Button
-            variant={card.priority === "high" ? "default" : "outline"}
-            size="sm"
-            className="flex-1 h-8 text-xs"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleQuickMove("high")
-            }}
-          >
-            <Star className="w-3 h-3 mr-1" />
-            Important
-          </Button>
-          <Button
-            variant={card.priority === "medium" ? "secondary" : "outline"}
-            size="sm"
-            className="flex-1 h-8 text-xs"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleQuickMove("medium")
-            }}
-          >
-            <Check className="w-3 h-3 mr-1" />
-            Matters
-          </Button>
-          <Button
-            variant={card.priority === "low" ? "secondary" : "outline"}
-            size="sm"
-            className="flex-1 h-8 text-xs"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleQuickMove("low")
-            }}
-          >
-            <X className="w-3 h-3 mr-1" />
-            Not Me
-          </Button>
-        </div>
-      )}
     </div>
   )
 }

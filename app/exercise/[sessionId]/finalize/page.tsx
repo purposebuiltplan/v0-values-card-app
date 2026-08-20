@@ -22,9 +22,12 @@ export default async function FinalizePage({ params }: PageProps) {
     redirect(`/exercise/${sessionId}/core`)
   }
 
-  // If already completed, redirect to summary
-  if (session.status === "completed" && session.share_slug) {
-    redirect(`/values/${session.share_slug}`)
+  // If already finalized, send them to their results rather than the capture form.
+  // `slug` is what finalizeSession sets, and what lib/actions.ts guards on. There is
+  // no `status` or `share_slug` column on `sessions`, so the check that used to be
+  // here was never true and this redirect never fired.
+  if (session.slug) {
+    redirect(`/values/${session.slug}`)
   }
 
   return <EmailCaptureForm sessionId={sessionId} />
