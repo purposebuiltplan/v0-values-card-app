@@ -383,7 +383,7 @@ This exercise is provided by PurposeFP, LLC ("Purpose Financial Planning"), a re
                   <p className="text-sm text-card-muted-foreground mb-4">Assess life balance across key areas in minutes</p>
                 </div>
                 <Button variant="outline" className="w-full bg-background" asChild>
-                  <a href="https://v0-balance-wheel-app.vercel.app/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://balance.purposefp.com/" target="_blank" rel="noopener noreferrer">
                     Try It Now
                   </a>
                 </Button>
