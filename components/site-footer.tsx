@@ -44,7 +44,7 @@ export function SiteFooter() {
         </a>
         <span aria-hidden="true">|</span>
         <a
-          href="https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1011497"
+          href="https://files.adviserinfo.sec.gov/IAPD/Content/Common/crd_iapd_Brochure.aspx?BRCHR_VRSN_ID=1062827"
           target="_blank"
           rel="noopener noreferrer"
           className="underline-offset-4 hover:text-foreground hover:underline"
